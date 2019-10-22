@@ -11,6 +11,13 @@ DATA_ONE_ITEM = json.loads("[{\
         \"created_at\": \"Wed Nov 28 19:33:04 +0000 2018\",\
         \"id\": 1067863966829801500}]")
 
+DATA_TWO_ITEMS_REVERSED = json.loads("[{\
+        \"created_at\": \"Wed Nov 28 19:33:04 +0000 2018\",\
+        \"id\": 1067863966829801400},\
+        {\
+        \"created_at\": \"Wed Nov 28 19:33:04 +0000 2018\",\
+        \"id\": 1067863966829801500}]")
+
 DATA_TWO_ITEMS = json.loads("[{\
         \"created_at\": \"Wed Nov 28 19:33:04 +0000 2018\",\
         \"id\": 1067863966829801500},\
@@ -65,6 +72,18 @@ class TestTwitterJoin(unittest.TestCase):
 
         tweets_out = self.mytwitterwrapper.join_tweets(None, None)
         self.assertEqual(len(tweets_out), 0)
+
+class TestTwitterSort(unittest.TestCase):
+    ''' Testset for working with twitter interface'''
+
+    def setUp(self):
+        self.mytwitterwrapper = TwitterWrapper("Matt_LeBlanc")
+
+    def test_sort_tweets(self):
+        '''Confirm that max value is found if it isn't the first value'''
+
+        tweets_out = self.mytwitterwrapper.sort_tweets(DATA_TWO_ITEMS_REVERSED)
+        self.assertEqual(tweets_out[0]["id"], 1067863966829801500)
 
 if __name__ == '__main__':
     unittest.main()
