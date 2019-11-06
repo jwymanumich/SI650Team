@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="padding"></div>
+
+    <h1>{{ title }}</h1>
+
+    <div class="search">
+        <mat-form-field [floatLabel]="'never'">
+            <input (click)="checkPlaceHolder()" (blur)="checkPlaceHolder()" matInput 
+            placeholder="{{placeholder}}" (keyup.enter)="search()"
+            [(ngModel)]="handle">
+        </mat-form-field>
+    </div>
+
+    <div class="buttons">
+        <button mat-raised-button (click)="search()">Summarize</button>
+        <button mat-raised-button color="primary" (click)="searchRandom()">I'm Feeling Lucky</button>
+    </div>
+</div>
