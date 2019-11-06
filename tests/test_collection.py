@@ -15,8 +15,8 @@ class TestCollection(unittest.TestCase):
         ''' test average document length as decimal '''
 
         collection = Collection()
-        collection.add_document(Document("this is a document", []))
-        collection.add_document(Document("this is not a document", []))
+        collection.add_document(Document(111, "this is a document", []))
+        collection.add_document(Document(222, "this is not a document", []))
 
         self.assertEqual(collection.get_avg_dl(), float(4.5))
 

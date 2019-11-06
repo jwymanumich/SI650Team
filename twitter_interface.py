@@ -47,7 +47,7 @@ class TwitterWrapper():
         self.tweets = []
 
         # Convert the tweets to json immediatly
-        for tweet in api.user_timeline(screen_name=self.name, count=count, since_id=since_id):
+        for tweet in api.user_timeline(user_id=self.name, count=count, since_id=since_id):
             self.tweets.append(tweet._json)
 
         return self.tweets

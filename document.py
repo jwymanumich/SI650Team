@@ -9,12 +9,13 @@ class Document():
     ''' Represnet documents for inverted_index and collection
     processing '''
 
-    def __init__(self, line, stop_words):
+    def __init__(self, document_id, line, stop_words):
         self.line = line
+        self.document_id = document_id
+
         self._words = []
         self._pos = []
         self._stop_word = []
-
         stemmer = PorterStemmer()
 
         line_tok = nltk.word_tokenize(self.line)
@@ -41,15 +42,6 @@ class Document():
     def get_words(self):
         ''' Get the words '''
         return self._words
-
-    def get_pos(self, term):
-        ''' count occurrences of term in document '''
-
-        count = 0
-        if(term in self._words):
-            index = self._words.index(term)
-            count = self._pos[index]
-        return count
 
     def term_count(self, term):
         ''' count occurrences of term in document '''

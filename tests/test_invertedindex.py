@@ -11,8 +11,8 @@ class TestInvertedIndex(unittest.TestCase):
 
     def setUp(self):
         ''' setup for tests '''
-        document1 = Document("this is a document", [])
-        document2 = Document("this is not a document", [])
+        document1 = Document(1, "this is a document", [])
+        document2 = Document(2, "this is not a document", [])
 
         self.inverted_index = InvertedIndex()
         self.inverted_index.add_document(document1)

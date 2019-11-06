@@ -43,3 +43,11 @@ class InvertedIndex():
         if(word in self._words):
             count = self._words[word]["total_frequency"]
         return count
+
+    def get_word_info(self, word):
+        ''' return information for the word provided'''
+        return self._words[word]
+
+    def get_term_document_count(self, word):
+        ''' get the number of documents that this word appeared in '''
+        return len(self._words[word]['doc_ids'])
