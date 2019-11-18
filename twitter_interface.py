@@ -2,15 +2,33 @@
 
 from collections import defaultdict
 import json
+import pandas as pd
 import tweepy as tw
 from config import CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 
 class TwitterWrapper():
     '''This is the class where all of the wrapping happens'''
 
+#In [46]: user = api.get_user(screen_name = 'saimadhup')
+#In [47]: user.id
+#Out[47]: 1088398616
+
     def __init__(self, name):
         self.name = name
         self.file_name = "data/" + self.name + '.json'
+        self.tweets = []
+
+    def set_user_id(self, user_id):
+        self.name = ""
+
+    def set_screen_name(self, input_screen_name):
+        auth = tw.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+        auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+        api = tw.API(auth, wait_on_rate_limit=True)
+
+        user = api.get_user(screen_name = input_screen_name)
+        self.name = user.id
+        self.file_name = "data/" + str(self.name) + '.json'
         self.tweets = []
 
     def load_tweets(self, cache_only=True):
@@ -23,6 +41,13 @@ class TwitterWrapper():
             self.tweets = self.join_tweets(old_tweets, new_tweets)
             self.save_tweets(self.tweets)
         return self.tweets
+
+    def get_tweet_text(self, cache_only=True):
+        ''' Single funciton to be used by callers to get data '''
+
+        tweets = self.load_tweets(cache_only)
+        df = pd.read_json(self.file_name, orient='records')
+        return df['text']
 
     def load_tweets_from_file(self):
         '''Get the list of tweets for the user that is cached in the local filesystem'''

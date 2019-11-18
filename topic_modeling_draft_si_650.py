@@ -43,15 +43,15 @@ def print_top_words(model, feature_names, n_top_words):
     return my_return
 
 #import tweets into dataframe (or list if we are not doing a visual component)
-def get_topic_models(file_id, n_top_words):
+def get_topic_models(df, n_top_words):
 
-    name = "data/{}.json".format(file_id)
+#    name = "data/{}.json".format(file_id)
 
-    df = pd.read_json(name, orient='records')
+#    df = pd.read_json(name, orient='records')
 
-    print(df.head(10))
+#    print(df.head(10))
     # convert tweets into list
-    text = df['text']
+    text = df
 
     # remove words with hashtags in front? remove just the hashtag? remove words with @ in front?
 
