@@ -49,6 +49,13 @@ class TwitterWrapper():
         df = pd.read_json(self.file_name, orient='records')
         return df['text']
 
+    def get_tweet_id_text(self, cache_only=True):
+        ''' Single funciton to be used by callers to get data '''
+
+        tweets = self.load_tweets(cache_only)
+        df = pd.read_json(self.file_name, orient='records')
+        return df[['id', 'text']]
+
     def load_tweets_from_file(self):
         '''Get the list of tweets for the user that is cached in the local filesystem'''
 
