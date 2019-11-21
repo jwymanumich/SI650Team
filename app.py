@@ -9,6 +9,7 @@ from topic_modeling_draft_si_650 import get_topic_models
 
 from flask import Flask
 from flask import request
+from flask_cors import CORS, cross_origin    
 
 app = Flask(__name__)
 
@@ -17,6 +18,7 @@ MY_COLLECTION = None
 
 I = 111
 
+@cross_origin() # allow all origins all methods.
 @app.route("/twitterid/<twitter_id>/topics/<topic_count>")
 def twitter_id_topics(twitter_id, topic_count):
     global I
@@ -24,13 +26,14 @@ def twitter_id_topics(twitter_id, topic_count):
     tw_handle = TwitterWrapper(twitter_id)
 
     cache_only = True
-    if(request.args.get('force_call') is not None):
+    if(request.args.get('force_call').lower() == 'true'):
         cache_only = False
 
     df = tw_handle.get_tweet_text(cache_only=cache_only)
     return get_topic_models(df, n_top_words = int(topic_count))
 
 @app.route("/twittername/<twitter_name>/topics/<topic_count>")
+@cross_origin() # allow all origins all methods.
 def twitter_name_topics(twitter_name, topic_count):
     global I
     I *= 2
@@ -39,9 +42,10 @@ def twitter_name_topics(twitter_name, topic_count):
 
     cache_only = True
     if(request.args.get('force_call') is not None):
-        cache_only = False
+        if(request.args.get('force_call').lower() == 'true'):
+            cache_only = False
 
-    df = tw_handle.get_tweet_text(cache_only=cache_only)
+    df = tw_handle.get_tweet_text(cache_only=False)
     return get_topic_models(df, n_top_words = int(topic_count))
 
 
