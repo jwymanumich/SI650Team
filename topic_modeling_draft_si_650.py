@@ -131,46 +131,46 @@ def get_topic_models(df, n_top_words):
     plt.pyplot.show()
     
     #second cloud
-    cloud = WordCloud(
+    secondcloud = WordCloud(
                               stopwords=STOPWORDS,
                               background_color='black',
                               width=2500,
                               height=1800
                              ).generate(" ".join(second_topic_words))
-    plt.pyplot.imshow(cloud)
+    plt.pyplot.imshow(secondcloud)
     plt.pyplot.axis('off')
     plt.pyplot.show()
     
     #third cloud
-    cloud = WordCloud(
+    thirdcloud = WordCloud(
                               stopwords=STOPWORDS,
                               background_color='black',
                               width=2500,
                               height=1800
                              ).generate(" ".join(third_topic_words))
-    plt.pyplot.imshow(cloud)
+    plt.pyplot.imshow(thirdcloud)
     plt.pyplot.axis('off')
     plt.pyplot.show()
     
     #fourth cloud
-    cloud = WordCloud(
+    fourthcloud = WordCloud(
                               stopwords=STOPWORDS,
                               background_color='black',
                               width=2500,
                               height=1800
                              ).generate(" ".join(fourth_topic_words))
-    plt.pyplot.imshow(cloud)
+    plt.pyplot.imshow(fourthcloud)
     plt.pyplot.axis('off')
     plt.pyplot.show()
     
     #fifth cloud
-    cloud = WordCloud(
+    fifthcloud = WordCloud(
                               stopwords=STOPWORDS,
                               background_color='black',
                               width=2500,
                               height=1800
                              ).generate(" ".join(fifth_topic_words))
-    plt.pyplot.imshow(cloud)
+    plt.pyplot.imshow(fifthcloud)
     plt.pyplot.axis('off')
     plt.pyplot.show()
 
