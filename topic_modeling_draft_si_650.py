@@ -20,6 +20,7 @@ from sklearn.decomposition import NMF, LatentDirichletAllocation
 import plotly
 import matplotlib as plt
 import nltk
+from wordcloud import WordCloud, STOPWORDS
 # %matplotlib inline
 
 import os.path
@@ -80,15 +81,13 @@ def get_topic_models(df, n_top_words):
                                     random_state = 0)
 
     lda.fit(tf)
-
+    
+    n_top_words = 40
     print("\nTopics in These Tweets: ")
     tf_feature_names = tf_vectorizer.get_feature_names() # grabbing the words from a tf-idf vector
     return print_top_words(lda, tf_feature_names, n_top_words) # prints out top 40 words from each 'topic' cluster
 
-    """**3. Topic Plots for More Visual Info?**
-
-    *   We could also do wordclouds if that's more interesting to y'all
-    """
+    """**3. Topic Plots for More Visual Info?** """
 
     import seaborn as sns
 
@@ -104,14 +103,85 @@ def get_topic_models(df, n_top_words):
     tweets = df['text']
     ax = sns.countplot(x='topic', data = df)
     plt.pyplot.show() # show what proportions the topics are represented at
+    
+     """**3. Word Clouds for More Visual Info?** """
+        
+     
+    first_topic = lda.components_[0]
+    second_topic = lda.components_[1]
+    third_topic = lda.components_[2]
+    fourth_topic = lda.components_[3]
+    fifth_topic = lda.components_[4]
+    
+    first_topic_words = [tf_feature_names[i] for i in first_topic.argsort()[:-50 - 1 :-1]]
+    second_topic_words = [tf_feature_names[i] for i in second_topic.argsort()[:-50 - 1 :-1]]
+    third_topic_words = [tf_feature_names[i] for i in third_topic.argsort()[:-50 - 1 :-1]]
+    fourth_topic_words = [tf_feature_names[i] for i in fourth_topic.argsort()[:-50 - 1 :-1]]
+    fifth_topic_words = [tf_feature_names[i] for i in fifth_topic.argsort()[:-50 - 1 :-1]]
+    
+    # Generating the wordcloud with the values under the category dataframe
+    firstcloud = WordCloud(
+                              stopwords=STOPWORDS,
+                              background_color='black',
+                              width=5000,
+                              height=3600
+                             ).generate(" ".join(first_topic_words))
+    plt.pyplot.imshow(firstcloud)
+    plt.pyplot.axis('off')
+    plt.pyplot.show()
+    
+    #second cloud
+    cloud = WordCloud(
+                              stopwords=STOPWORDS,
+                              background_color='black',
+                              width=2500,
+                              height=1800
+                             ).generate(" ".join(second_topic_words))
+    plt.pyplot.imshow(cloud)
+    plt.pyplot.axis('off')
+    plt.pyplot.show()
+    
+    #third cloud
+    cloud = WordCloud(
+                              stopwords=STOPWORDS,
+                              background_color='black',
+                              width=2500,
+                              height=1800
+                             ).generate(" ".join(third_topic_words))
+    plt.pyplot.imshow(cloud)
+    plt.pyplot.axis('off')
+    plt.pyplot.show()
+    
+    #fourth cloud
+    cloud = WordCloud(
+                              stopwords=STOPWORDS,
+                              background_color='black',
+                              width=2500,
+                              height=1800
+                             ).generate(" ".join(fourth_topic_words))
+    plt.pyplot.imshow(cloud)
+    plt.pyplot.axis('off')
+    plt.pyplot.show()
+    
+    #fifth cloud
+    cloud = WordCloud(
+                              stopwords=STOPWORDS,
+                              background_color='black',
+                              width=2500,
+                              height=1800
+                             ).generate(" ".join(fifth_topic_words))
+    plt.pyplot.imshow(cloud)
+    plt.pyplot.axis('off')
+    plt.pyplot.show()
 
     """**Next Steps:**
 
 
     *   Front & Back End Set Up
+    *   maybe add sample tweets for each topic? 
     *   Integrate Model into App
     *   Test with Data and Debug --> See prof
-    *   Evaluate and possibly pivot
+    *   Evaluate
 
     **by Thursday**
 
