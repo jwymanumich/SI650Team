@@ -104,7 +104,7 @@ def get_topic_models(df, n_top_words):
     ax = sns.countplot(x='topic', data = df)
     plt.pyplot.show() # show what proportions the topics are represented at
     
-     """**3. Word Clouds for More Visual Info?** """
+     """**4. Word Clouds for More Visual Info?** """
         
      
     first_topic = lda.components_[0]
