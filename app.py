@@ -16,13 +16,9 @@ app = Flask(__name__)
 INVERTED_INDEX = None
 MY_COLLECTION = None
 
-I = 111
-
 @cross_origin() # allow all origins all methods.
 @app.route("/twitterid/<twitter_id>/topics/<topic_count>")
 def twitter_id_topics(twitter_id, topic_count):
-    global I
-    I *= 2
     tw_handle = TwitterWrapper(twitter_id)
 
     cache_only = True
@@ -35,8 +31,6 @@ def twitter_id_topics(twitter_id, topic_count):
 @app.route("/twittername/<twitter_name>/topics/<topic_count>")
 @cross_origin() # allow all origins all methods.
 def twitter_name_topics(twitter_name, topic_count):
-    global I
-    I *= 2
     tw_handle = TwitterWrapper("")
     tw_handle.set_screen_name(twitter_name)
 
@@ -85,3 +79,15 @@ def do_main():
 #def eprint(*args, **kwargs):
 #    print(*args, file=sys.stderr, **kwargs)
 
+def test_topics():
+    tw_handle = TwitterWrapper("")
+    tw_handle.set_screen_name("realdonaldtrump")
+
+#    tw_handle.more_timeline()
+
+#    df = tw_handle.load_tweets(cache_only=False)
+    df =  tw_handle.get_tweet_text(cache_only=True)
+
+    get_topic_models(df, n_top_words = int(10))
+
+test_topics()    
