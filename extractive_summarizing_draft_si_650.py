@@ -200,11 +200,7 @@ def convert_real_data(df):
 
     return docs
 
-
-if __name__ == '__main__':
-    tw_handle = TwitterWrapper("")
-    tw_handle.set_screen_name("BarackObama")
-    df = tw_handle.get_tweet_id_text(cache_only=False)
+def get_topic_models_graph(df, n_top_words):
     test_documents = convert_real_data(df)
 
     # test_documents = get_test_data()
@@ -216,7 +212,15 @@ if __name__ == '__main__':
 
     lrs = LexRankSummarizer(doc_dict)
     res = lrs.summarize(threshold=0.1, tolerance=0.0001)
-    for doc in res[:10]:
+    for doc in res[:n_top_words]:
         print(doc.dist, doc.raw)
+        item = df[df['text'] == doc.raw]
+        print(item['id'])
 
     print('done!')
+
+if __name__ == '__main__':
+    tw_handle = TwitterWrapper("")
+    tw_handle.set_screen_name("BarackObama")
+    df = tw_handle.get_tweet_id_text(cache_only=False)
+    get_topic_models_graph(df.head(500), 10)

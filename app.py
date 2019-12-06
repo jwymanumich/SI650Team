@@ -76,6 +76,12 @@ def do_main():
 #    print("do_main complete")
 #do_main()
 
+if __name__ == '__main__':
+    tw_handle = TwitterWrapper("")
+    tw_handle.set_screen_name("BarackObama")
+    df = tw_handle.get_tweet_id_text(cache_only=False)
+    t = get_topic_models(df.head(500), 10)
+    print (t)
 #def eprint(*args, **kwargs):
 #    print(*args, file=sys.stderr, **kwargs)
 
@@ -90,4 +96,4 @@ def test_topics():
 
     get_topic_models(df, n_top_words = int(10))
 
-test_topics()    
+#test_topics()    

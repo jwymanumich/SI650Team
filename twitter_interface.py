@@ -59,7 +59,7 @@ class TwitterWrapper():
         alltweets = []	
         
         #make initial request for most recent tweets (200 is the maximum allowed count)
-        new_tweets = api.user_timeline(user_id=self.name,count=200)
+        new_tweets = api.user_timeline(user_id=self.name,count=200, tweet_mode="extended")
         
         sanitized_tweets = self.sanatize(new_tweets)
 
@@ -76,7 +76,7 @@ class TwitterWrapper():
 #            time.sleep(2)
             #all subsiquent requests use the max_id param to prevent duplicates
 #            oldest = 1194414093781917695
-            new_tweets = api.user_timeline(user_id=self.name,count=200,max_id=oldest,min_id=since)
+            new_tweets = api.user_timeline(user_id=self.name,count=200,max_id=oldest,min_id=since, tweet_mode="extended")
             
             #save most recent tweets
             alltweets.extend(self.sanatize(new_tweets))
@@ -169,8 +169,34 @@ class TwitterWrapper():
     def save_tweets(self, tweets):
         ''' Write all tweets to person's file '''
 
+        outjson = []
+
+        for item in tweets:
+            outitem = {}
+            outitem['text'] = ""
+            for field in item:
+                if(field == "created_at"):
+                    outitem['created_at'] = item['created_at']
+                if(field == "full_text"):
+                    outitem['text'] = item['full_text']
+                if(field == "text"):
+                    outitem['text'] = item['text']
+                if(field == "id_str"):
+                    outitem['id_str'] = item['id_str']
+                if(field == "id"):
+                    outitem['id'] = item['id']
+#                if(field == "is_retweet"):
+#                    outitem['is_retweet'] = item['is_retweet']
+#                if(field == "retweeted"):
+#                    outitem['is_retweet'] = item['is_retweet']
+
+            if(outitem['text'].startswith("RT") is False):
+#                print("skipping")
+#            else:
+                outjson.append(outitem)
+
         with open(self.file_name, 'w') as outfile:
-            json.dump(tweets, outfile)
+            json.dump(outjson, outfile)
 
     def more_timeline(self):
         # OAuth process, using the keys and tokens
