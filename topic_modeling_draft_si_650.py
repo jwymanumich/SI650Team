@@ -44,11 +44,15 @@ def print_top_words(model, feature_names, n_top_words):
 
         topic = model.components_[topic_idx]
         topic_words = [feature_names[i] for i in topic.argsort()[:-n_top_words - 1 :-1]]
+        weights = [model.components_[topic_idx][i] for i in topic.argsort()[:-n_top_words - 1 :-1]]
 
 #        topic_words = [tf_feature_names[i] for i in topic.argsort()[:-n_top_words - 1 :-1]]
 
-
-        my_return[topic_idx] = my_value
+        my_return[topic_idx] = []
+        for item in range(n_top_words):
+            my_return[topic_idx].append({"word": topic_words[item],
+                               "weight": weights[item]
+                })
     print()
     return my_return
 
@@ -99,7 +103,7 @@ def get_topic_models(df, n_top_words):
 
     top_words = print_top_words(lda, tf_feature_names, n_top_words) # prints out top 40 words from each 'topic' cluster
 
-#    return top_words
+    return top_words
 
     for word in top_words:
         print(top_words[word])
