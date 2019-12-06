@@ -100,23 +100,23 @@ export class SummaryComponent implements OnInit {
 
           for (let my_topic of x[0]) {
               console.log(my_topic); 
-              this.wordData1.push({size: 800, text: my_topic["word"]})
+              this.wordData1.push({size: my_topic["weight"], text: my_topic["word"]})
           }
           for (let my_topic of x[1]) {
             console.log(my_topic); 
-            this.wordData2.push({size: 800, text: my_topic["word"]})
+            this.wordData2.push({size: my_topic["weight"], text: my_topic["word"]})
         }
         for (let my_topic of x[2]) {
             console.log(my_topic); 
-            this.wordData3.push({size: 800, text: my_topic["word"]})
+            this.wordData3.push({size: my_topic["weight"], text: my_topic["word"]})
         }
         for (let my_topic of x[3]) {
             console.log(my_topic); 
-            this.wordData4.push({size: 800, text: my_topic["word"]})
+            this.wordData4.push({size: my_topic["weight"], text: my_topic["word"]})
         }
         for (let my_topic of x[4]) {
             console.log(my_topic); 
-            this.wordData5.push({size: 800, text: my_topic["word"]})
+            this.wordData5.push({size: my_topic["weight"], text: my_topic["word"]})
         }
 
 
