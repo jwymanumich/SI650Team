@@ -1,3 +1,4 @@
+from rouge_score import rouge_scorer
 import nltk
 import numpy
 import numpy
@@ -192,7 +193,7 @@ def convert_real_data(df):
         content.construct_word_freq_list(freq_list)
 
         # content.construct_word_freq_list([('basketbal', 1), ('document', 1), (
-            # 'footbal', 1), ('gener', 1), ('golf', 1), ('sport', 1), ('talk', 1), ('tenni', 1)])
+        # 'footbal', 1), ('gener', 1), ('golf', 1), ('sport', 1), ('talk', 1), ('tenni', 1)])
 
         doc = TestDocument(uid, "test_name", "test_name",
                            datetime.datetime.utcnow, content, "no_url", 0)
@@ -202,21 +203,36 @@ def convert_real_data(df):
 
 
 if __name__ == '__main__':
+    # get data
     tw_handle = TwitterWrapper("")
     tw_handle.set_screen_name("BarackObama")
     df = tw_handle.get_tweet_id_text(cache_only=False)
     test_documents = convert_real_data(df)
 
-    # test_documents = get_test_data()
+    # run algorithm
     doc_dict = {}
     id = 0
     for doc in test_documents:
         doc_dict[id] = doc.content
-        id +=1
+        id += 1
 
     lrs = LexRankSummarizer(doc_dict)
-    res = lrs.summarize(threshold=0.1, tolerance=0.0001)
-    for doc in res[:10]:
-        print(doc.dist, doc.raw)
+    res = lrs.summarize(threshold=0.1, tolerance=0.0001) 
 
+    # test result rouge1, rouge2
+    with open('./data/elonmusk_gold.txt') as f:
+        content = f.readlines()
+
+    scorer = rouge_scorer.RougeScorer(['rouge1', 'rouge2'], use_stemmer=True)
+
+    prediction = [doc.raw.strip() for doc in res[:50]] 
+    prediction = ' '.join(prediction)
+
+    target = [x.strip() for x in content] 
+    target = ' '.join(target)
+
+    scores = scorer.score(target, prediction)
+    print(scores)
+
+    # finish confirmation
     print('done!')
