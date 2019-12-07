@@ -211,16 +211,20 @@ def get_topic_models_graph(df, n_top_words):
         id +=1
 
     lrs = LexRankSummarizer(doc_dict)
+
+    return_value = {"values": []}
     res = lrs.summarize(threshold=0.1, tolerance=0.0001)
     for doc in res[:n_top_words]:
         print(doc.dist, doc.raw)
         item = df[df['text'] == doc.raw]
-        print(item['id'])
 
-    print('done!')
+        for (columnName, columnData) in item.iteritems():
+            if(columnName == 'id'):
+                return_value['values'].append({'id': str(columnData.values[0]), 'text':doc.raw})
+    return return_value
 
 if __name__ == '__main__':
     tw_handle = TwitterWrapper("")
     tw_handle.set_screen_name("BarackObama")
-    df = tw_handle.get_tweet_id_text(cache_only=False)
-    get_topic_models_graph(df.head(500), 10)
+    df = tw_handle.get_tweet_id_text(cache_only=True)
+    get_topic_models_graph(df.head(50), 10)
