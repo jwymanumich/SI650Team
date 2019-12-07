@@ -9,6 +9,8 @@ Original file is located at
 NOTE: This is a skeleton, we still need to adapt this into our application framework.
 """
 
+from twitter_interface import TwitterWrapper
+
 # Commented out IPython magic to ensure Python compatibility.
 #jww comment  
 
@@ -39,18 +41,32 @@ def print_top_words(model, feature_names, n_top_words):
         my_value = " ".join([feature_names[i]
                         for i in topic.argsort()[:-n_top_words - 1:-1]])
         print(my_value)
-        my_return[topic_idx] = my_value
+
+        topic = model.components_[topic_idx]
+        topic_words = [feature_names[i] for i in topic.argsort()[:-n_top_words - 1 :-1]]
+        weights = [model.components_[topic_idx][i] for i in topic.argsort()[:-n_top_words - 1 :-1]]
+
+#        topic_words = [tf_feature_names[i] for i in topic.argsort()[:-n_top_words - 1 :-1]]
+
+        my_return[topic_idx] = []
+        for item in range(n_top_words):
+            my_return[topic_idx].append({"word": topic_words[item],
+                               "weight": weights[item]
+                })
     print()
     return my_return
+
+def lemmatization(texts, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV']):
+    """https://spacy.io/api/annotation"""
+    texts_out = []
+    for sent in texts:
+        doc = nlp(" ".join(sent)) 
+        texts_out.append([token.lemma_ for token in doc if token.pos_ in allowed_postags])
+    return texts_out
 
 #import tweets into dataframe (or list if we are not doing a visual component)
 def get_topic_models(df, n_top_words):
 
-#    name = "data/{}.json".format(file_id)
-
-#    df = pd.read_json(name, orient='records')
-
-#    print(df.head(10))
     # convert tweets into list
     text = df
 
@@ -71,8 +87,6 @@ def get_topic_models(df, n_top_words):
                                         decode_error='ignore')
     tf = tf_vectorizer.fit_transform(text)
 
-
-
     """**2. LDA**"""
 
     lda = LatentDirichletAllocation(n_components=5, max_iter=5,
@@ -82,10 +96,17 @@ def get_topic_models(df, n_top_words):
 
     lda.fit(tf)
     
-    n_top_words = 40
     print("\nTopics in These Tweets: ")
     tf_feature_names = tf_vectorizer.get_feature_names() # grabbing the words from a tf-idf vector
-    return print_top_words(lda, tf_feature_names, n_top_words) # prints out top 40 words from each 'topic' cluster
+
+
+
+    top_words = print_top_words(lda, tf_feature_names, n_top_words) # prints out top 40 words from each 'topic' cluster
+
+    return top_words
+
+    for word in top_words:
+        print(top_words[word])
 
     """**3. Topic Plots for More Visual Info?** """
 
@@ -100,80 +121,42 @@ def get_topic_models(df, n_top_words):
 
     df['topic'] = topic_list
 
-    tweets = df['text']
+#    tweets = df['text']
     ax = sns.countplot(x='topic', data = df)
     plt.pyplot.show() # show what proportions the topics are represented at
     
-     """**4. Word Clouds for More Visual Info?** """
-        
-     
-    first_topic = lda.components_[0]
-    second_topic = lda.components_[1]
-    third_topic = lda.components_[2]
-    fourth_topic = lda.components_[3]
-    fifth_topic = lda.components_[4]
-    
-    first_topic_words = [tf_feature_names[i] for i in first_topic.argsort()[:-50 - 1 :-1]]
-    second_topic_words = [tf_feature_names[i] for i in second_topic.argsort()[:-50 - 1 :-1]]
-    third_topic_words = [tf_feature_names[i] for i in third_topic.argsort()[:-50 - 1 :-1]]
-    fourth_topic_words = [tf_feature_names[i] for i in fourth_topic.argsort()[:-50 - 1 :-1]]
-    fifth_topic_words = [tf_feature_names[i] for i in fifth_topic.argsort()[:-50 - 1 :-1]]
-    
-    # Generating the wordcloud with the values under the category dataframe
-    firstcloud = WordCloud(
-                              stopwords=STOPWORDS,
-                              background_color='black',
-                              width=5000,
-                              height=3600
-                             ).generate(" ".join(first_topic_words))
-    plt.pyplot.imshow(firstcloud)
-    plt.pyplot.axis('off')
-    plt.pyplot.show()
-    
-    #second cloud
-    secondcloud = WordCloud(
-                              stopwords=STOPWORDS,
-                              background_color='black',
-                              width=2500,
-                              height=1800
-                             ).generate(" ".join(second_topic_words))
-    plt.pyplot.imshow(secondcloud)
-    plt.pyplot.axis('off')
-    plt.pyplot.show()
-    
-    #third cloud
-    thirdcloud = WordCloud(
-                              stopwords=STOPWORDS,
-                              background_color='black',
-                              width=2500,
-                              height=1800
-                             ).generate(" ".join(third_topic_words))
-    plt.pyplot.imshow(thirdcloud)
-    plt.pyplot.axis('off')
-    plt.pyplot.show()
-    
-    #fourth cloud
-    fourthcloud = WordCloud(
-                              stopwords=STOPWORDS,
-                              background_color='black',
-                              width=2500,
-                              height=1800
-                             ).generate(" ".join(fourth_topic_words))
-    plt.pyplot.imshow(fourthcloud)
-    plt.pyplot.axis('off')
-    plt.pyplot.show()
-    
-    #fifth cloud
-    fifthcloud = WordCloud(
-                              stopwords=STOPWORDS,
-                              background_color='black',
-                              width=2500,
-                              height=1800
-                             ).generate(" ".join(fifth_topic_words))
-    plt.pyplot.imshow(fifthcloud)
-    plt.pyplot.axis('off')
-    plt.pyplot.show()
+    """**4. Word Clouds for More Visual Info?** """
 
+    from gensim.models import CoherenceModel
+    import gensim.corpora as corpora
+
+#    data_lemmatized = lemmatization(df, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV'])
+
+    # Create Dictionary
+#    id2word = corpora.Dictionary(data_lemmatized)
+
+    # Compute Coherence Score
+#    coherence_model_lda = CoherenceModel(model=lda, texts=df[text], dictionary=id2word, coherence='c_v')
+#    coherence_lda = coherence_model_lda.get_coherence()
+#    print('\nCoherence Score: ', coherence_lda)
+
+
+    for index in range(0,5):
+        topic = lda.components_[index]
+        
+        topic_words = [tf_feature_names[i] for i in topic.argsort()[:-n_top_words - 1 :-1]]
+    
+        # Generating the wordcloud with the values under the category dataframe
+        cloud = WordCloud(
+                                stopwords=STOPWORDS,
+                                background_color='black',
+                                width=5000,
+                                height=3600
+                                ).generate(" ".join(topic_words))
+        plt.pyplot.imshow(cloud)
+        plt.pyplot.axis('off')
+        plt.pyplot.show()
+    
     """**Next Steps:**
 
 
@@ -189,3 +172,11 @@ def get_topic_models(df, n_top_words):
     * Priya will finish the modeling code in github
     """
 
+if __name__ == '__main__':
+    tw_handle = TwitterWrapper("")
+    tw_handle.set_screen_name("BarackObama")
+#    df = tw_handle.get_tweet_id_text(cache_only=False)
+    df = tw_handle.get_tweet_text(cache_only=True)
+
+    t = get_topic_models(df.head(500), 10)
+    print (t)

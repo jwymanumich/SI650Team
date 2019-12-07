@@ -98,25 +98,25 @@ export class SummaryComponent implements OnInit {
 
       var a = this.twittertopicservice.getTwitterTopics(this.handle).subscribe((x: string) => {
 
-          for (let my_text of x[0].split(" ")) {
-              console.log(my_text); 
-              this.wordData1.push({size: 800, text: my_text})
+          for (let my_topic of x[0]) {
+              console.log(my_topic); 
+              this.wordData1.push({size: my_topic["weight"], text: my_topic["word"]})
           }
-          for (let my_text of x[1].split(" ")) {
-            console.log(my_text); 
-            this.wordData2.push({size: 800, text: my_text})
+          for (let my_topic of x[1]) {
+            console.log(my_topic); 
+            this.wordData2.push({size: my_topic["weight"], text: my_topic["word"]})
         }
-        for (let my_text of x[2].split(" ")) {
-            console.log(my_text); 
-            this.wordData3.push({size: 800, text: my_text})
+        for (let my_topic of x[2]) {
+            console.log(my_topic); 
+            this.wordData3.push({size: my_topic["weight"], text: my_topic["word"]})
         }
-        for (let my_text of x[3].split(" ")) {
-            console.log(my_text); 
-            this.wordData4.push({size: 800, text: my_text})
+        for (let my_topic of x[3]) {
+            console.log(my_topic); 
+            this.wordData4.push({size: my_topic["weight"], text: my_topic["word"]})
         }
-        for (let my_text of x[4].split(" ")) {
-            console.log(my_text); 
-            this.wordData5.push({size: 800, text: my_text})
+        for (let my_topic of x[4]) {
+            console.log(my_topic); 
+            this.wordData5.push({size: my_topic["weight"], text: my_topic["word"]})
         }
 
 
