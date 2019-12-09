@@ -32,6 +32,11 @@ class TwitterWrapper():
         self.file_name = "data/" + str(input_screen_name) + '.json'
         self.tweets = []
 
+    def set_test_name(self, input_screen_name):
+        self.name = input_screen_name
+        self.file_name = "data/" + str(input_screen_name) + '_1000.json'
+        self.tweets = []
+
     def load_tweets(self, cache_only=True):
         ''' Single funciton to be used by callers to get data '''
 
@@ -102,6 +107,11 @@ class TwitterWrapper():
 
         tweets = self.load_tweets(cache_only)
         df = pd.read_json(self.file_name, orient='records')
+
+        ## If 'id' doesn't exist, append 'id' for _1000.json files
+        if 'id' not in df.columns:
+            df['id'] = range(1, len(df) + 1)
+
         return df[['id', 'text']]
 
     def load_tweets_from_file(self):

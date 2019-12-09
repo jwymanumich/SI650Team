@@ -1,0 +1,50 @@
+@Erdayastronaut @goathobbit Testing a possible Starship windward side ceramic tile. Maximizing emissivity is best for conductive/particle heating. Nice thing about steel is that tiles can be very thin, unlike carbon fiber or aluminum airframe.
+@flcnhvy @Tesla Unity port is done, so finessing the controls now. Mostly limited by local storage. Will allow additional game storage via USB. Whatever’s most fun!
+Ability to stream YouTube &amp; Netflix when car is stopped coming to your Tesla soon! Has an amazingly immersive, cinematic feel due to the comfy seats &amp; surround sound audio.
+@DMC_Ryan Yes, V10 will include several games &amp; infotainment features, improved highway Autopilot, better traffic light &amp; stop sign recognition &amp; Smart Summon
+Tesla owners can schedule service appointments in under a minute just using their Tesla phone app!
+@EvaFoxU @SpaceX That was our last chance to reach orbit. If it had failed, SpaceX would have died.
+Great progress by Starship Cape team. Started several months behind, but catching up fast. This will be a super fun race to orbit, moon &amp; Mars!
+@HarryStoltz1 @Sofiaan @IIHS_autosafety @atj721 Ultimately, however, what really matters is empirical safety. Nothing in life is 100% safe, so optimal figure of merit is how many millions of miles/km per accident.
+Gas cars are so last-century! https://t.co/jrfrXjbLeZ
+Watching a movie on Tesla V10.0 is great, in large part due to the sound system https://t.co/7Qh2iHEn8i
+@dbabrams @BangOlufsen Tesla audio engineers come from B&amp;O &amp; many other companies. They literally rōq. Our system is highly programmable, so we keep improving it via OTA codec updates.
+With the new lower Tesla pricing, it’s like having a money printer on your roof if you live a state with high electricity costs. Still better to buy, but the rental option makes the economics obvious.
+@SciGuySpace @hover389 AF certification required an enormous amount of work. It’s mostly design-review based, not flight-based.
+@TeslaTrip @arctechinc We need to complete internal QA testing for safety, which will hopefully be done in about 4 weeks
+@AKawakbi @newscientist Tesla is working hard to help stop global warming
+If you’re a utility or public utilities commission, please consider using the Tesla Megapack. Better for the environment &amp; usually lower cost than fossil fuel peaker plants! https://t.co/Ls4IfB0d6a
+@JaneidyEve @flcnhvy @Freiraum77 @SpaceX Aiming for 20km flight in Oct &amp; orbit attempt shortly thereafter. Starship update will be on Sept 28th, anniversary of SpaceX reaching orbit. Starship Mk 1 will be fully assembled by that time.
+@Tesla In close traffic, poisonous gas spewing from the car in front of you goes straight into your AC intake. Good thing gas/diesel carmakers didn’t cheat on their emissions or we’d be in real trouble 😅
+@justpaulinelol @Tesla Same, except where limited by EU regulations. We’re aware of extreme consumer unhappiness about this &amp; are working with EU regulators to address.
+@teslaownersSV @tesla_truth @Tesla Wanted to build an electric car company in college. Was going to do PhD at Stanford in electric energy storage (ultracaps), but got distracted for a few years by the Internet.
+@brandonbernicky @Gfilche @teslaownersSV @tesla_truth @Tesla Looking good. Smart summon is almost great. Drive-in theater mode, caraoke &amp; Cuphead are awesome.
+@flcnhvy @DJSnM @Erdayastronaut @KevinKling12 @spaceXcentric Everything happens so fast. It’s such a different paradigm that applying aircraft concepts to rockets is almost like applying shipping concepts to aircraft. Travels 10,000 km in 30 mins.
+@Erdayastronaut @DJSnM @KevinKling12 @spaceXcentric Distance from fireball is 0.5*a*t^2, so if t is small, you haven’t moved far even if a is high. At ~6g thrust, you’ll only travel ~0.03m in 100 ms. Pressure wave (aka explosion) with liquid rockets is low, as ox &amp; fuel are poorly mixed. If you can fly out of it, you’re prob ok.
+@Erdayastronaut @JHC2718 @MagnussonMani @vicvic21266 @flcnhvy @DJSnM @KevinKling12 @spaceXcentric Failure rate is actually both higher &amp; lower than that, as the Falcon 9 design has changed almost completely several times. Currently flying version has no failures (may fate continue to be merciful), but older versions therefore have a higher failure rate.
+@Teslarati Autopilot active crash prevention keeps getting better, as we examine every crash for improvement &amp; then upload smarter software. Ironically, I hope we’re never on the list!
+@Model3Owners Looking into this. A fundamental premise of Tesla is that everyone is offered same terms at same time, ie what you get should never be a function of bargaining.
+@TeslaForLife @teslaownersSV @Kristennetten @Model3Owners Exactly! We’ve only one car factory in California &amp; one Gigafactory (for batteries &amp; drive units) in Nevada. Giga Shanghai will do cars, batteries &amp; drive units for the greater China area. Over time, regional Gigafactories will lower costs &amp; improve logistics worldwide.
+@DanielCardena @Teslarati Rear facing, but roomier. Great for family gatherings! I did a road trip across America with my five boys &amp; Talulah in the 7 seat Model S several years ago.
+@ElonAccessories @teslaownersSV @flcnhvy @Teslarati Actually, Model 3 would beat the Taycan on Nürburgring over multiple laps, as it has more range
+@Teslarati Great work by SpaceX parachute engineering! The Crew Dragon parachutes are way more difficult than they may seem. The Apollo program found them to be so hard that it became a notable morale problem!
+@TeslaTested @Teslarati Will discuss with my product team next week, but probably
+@SpaceXFan97 Nose tip has forward movable fins, cold gas attitude control thrusters, header tanks for landing, composite pressure vessels, several large batteries, etc. Placed up there to balance high mass of Raptors &amp; rear fins at the bottom.
+@CptnCrutch5373 @Erdayastronaut @Kalzsom Approximately correct. We also fire the ACS thrusters to rotate the vehicle &amp; ignite Raptors at full gimbal angle to complete the turn.
+@annerajb @Jennerator211 @Erdayastronaut With rare exceptions, composites would make Starship heavier. They don’t stand up well to high temperatures, but steel does great.
+Starship will allow us to inhabit other worlds
+Inside Starship cargo bay. Header tanks mounted in tip of nosecone to offset engine weight at rear. https://t.co/EJSwqMCooA
+Given how quickly the world is shifting to electric vehicles, a gas/diesel vehicle bought today will probably have low resale value https://t.co/zmfOwk9wML
+@SciGuySpace For what it’s worth, the SpaceX schedule, which I’ve just reviewed in depth, shows Falcon &amp; Dragon at the Cape &amp; all testing done in ~10 weeks
+@Macwars Fair point. Will hold on EU price change until Tesla gets clarity from regulators about Smart Summon feature release date.
+@teslaownersSV @Sofiaan @annerajb @tesla_addicted We’re working on a simple initial version of Autopark. Will be safe, but sometimes park in silly places that aren’t actual parking spaces.
+@HarryStoltz1 @neiltyson @Space_Station Big challenge for Starship refueling on the moon is finding sources of carbon. Probably some pretty big deposits in craters from meteorites. Same goes for hydrogen &amp; oxygen, also in (shadowed) craters.
+@RationalEtienne @LaurenRow5 @EvaFoxU @JohnnaCrider1 @Kristennetten @vincent13031925 @28delayslater @Sofiaan @hamids @InsideEVs Tesla is first American car company to achieve sustained volume production in past ~100 years. Hardest, most painful thing I’ve ever been through, including getting Falcon to orbit.
+Anyone who’s interested in working on cutting edge manufacturing — designing &amp; building the machine that makes the machine — please consider working at Tesla or SpaceX. We’re gonna take this to a whole new level!
+@TJ_Cooney Wow, 2011 seems like eons ago! With fairing recovery, Falcon is ~80% reusable, but reflight takes several days &amp; requires boats. Starship will be fully reusable with booster reflight possible every few hours &amp; ship reflight every 8 hours. No boats needed.
+@Teslarati Connected, autonomous cars require great software. Advanced factories also require great software. The car industry is not very good at software.
+@lexfridman Bad logic is always ugly
+Congrats to Tesla team on Model 3 winning best midsize car in Germany! 🇩🇪🇩🇪🇩🇪 https://t.co/4CDTf4c3eC
+@Ford Congratulations on the Mach E! Sustainable/electric cars are the future!! Excited to see this announcement from Ford, as it will encourage other carmakers to go electric too.
+Tesla Cybertruck (pressurized edition) will be official truck of Mars
+@ElenMatvievska @Tesla Coming soon! We’re working to complete the full Supercharger route from London to Shanghai.

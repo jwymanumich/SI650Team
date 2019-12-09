@@ -12,7 +12,7 @@ NOTE: This is a skeleton, we still need to adapt this into our application frame
 from twitter_interface import TwitterWrapper
 
 # Commented out IPython magic to ensure Python compatibility.
-#jww comment  
+# jww comment
 
 import pandas as pd
 import numpy as np
@@ -23,48 +23,57 @@ import plotly
 import matplotlib as plt
 import nltk
 from wordcloud import WordCloud, STOPWORDS
+from rouge_score import rouge_scorer
+
 # %matplotlib inline
 
 import os.path
 from os import path
 
-#nltk.download('punkt')
-#nltk.download('stopwords')
-#nltk.download('wordnet')
+# nltk.download('punkt')
+# nltk.download('stopwords')
+# nltk.download('wordnet')
 
 """**1. Data Pre-Processing**"""
+
 
 def print_top_words(model, feature_names, n_top_words):
     my_return = {}
     for topic_idx, topic in enumerate(model.components_):
         print("Topic #%d:" % topic_idx)
         my_value = " ".join([feature_names[i]
-                        for i in topic.argsort()[:-n_top_words - 1:-1]])
+                             for i in topic.argsort()[:-n_top_words - 1:-1]])
         print(my_value)
 
         topic = model.components_[topic_idx]
-        topic_words = [feature_names[i] for i in topic.argsort()[:-n_top_words - 1 :-1]]
-        weights = [model.components_[topic_idx][i] for i in topic.argsort()[:-n_top_words - 1 :-1]]
+        topic_words = [feature_names[i]
+                       for i in topic.argsort()[:-n_top_words - 1:-1]]
+        weights = [model.components_[topic_idx][i]
+                   for i in topic.argsort()[:-n_top_words - 1:-1]]
 
 #        topic_words = [tf_feature_names[i] for i in topic.argsort()[:-n_top_words - 1 :-1]]
 
         my_return[topic_idx] = []
         for item in range(n_top_words):
             my_return[topic_idx].append({"word": topic_words[item],
-                               "weight": weights[item]
-                })
+                                         "weight": weights[item]
+                                         })
     print()
     return my_return
+
 
 def lemmatization(texts, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV']):
     """https://spacy.io/api/annotation"""
     texts_out = []
     for sent in texts:
-        doc = nlp(" ".join(sent)) 
-        texts_out.append([token.lemma_ for token in doc if token.pos_ in allowed_postags])
+        doc = nlp(" ".join(sent))
+        texts_out.append(
+            [token.lemma_ for token in doc if token.pos_ in allowed_postags])
     return texts_out
 
-#import tweets into dataframe (or list if we are not doing a visual component)
+# import tweets into dataframe (or list if we are not doing a visual component)
+
+
 def get_topic_models(df, n_top_words):
 
     # convert tweets into list
@@ -75,33 +84,33 @@ def get_topic_models(df, n_top_words):
     from nltk.stem import WordNetLemmatizer
     lemm = WordNetLemmatizer()
 
-    #borrowed from another project, so if this doesn't work I can build out a simpler step by step process
+    # borrowed from another project, so if this doesn't work I can build out a simpler step by step process
     class LemmaCountVectorizer(CountVectorizer):
         def build_analyzer(self):
             analyzer = super(LemmaCountVectorizer, self).build_analyzer()
             return lambda doc: (lemm.lemmatize(w) for w in analyzer(doc))
 
-    tf_vectorizer = LemmaCountVectorizer(max_df=0.95, 
-                                        min_df=2,
-                                        stop_words='english',
-                                        decode_error='ignore')
+    tf_vectorizer = LemmaCountVectorizer(max_df=0.95,
+                                         min_df=2,
+                                         stop_words='english',
+                                         decode_error='ignore')
     tf = tf_vectorizer.fit_transform(text)
 
     """**2. LDA**"""
 
     lda = LatentDirichletAllocation(n_components=5, max_iter=5,
-                                    learning_method = 'online',
-                                    learning_offset = 50.,
-                                    random_state = 0)
+                                    learning_method='online',
+                                    learning_offset=50.,
+                                    random_state=0)
 
     lda.fit(tf)
-    
+
     print("\nTopics in These Tweets: ")
-    tf_feature_names = tf_vectorizer.get_feature_names() # grabbing the words from a tf-idf vector
+    # grabbing the words from a tf-idf vector
+    tf_feature_names = tf_vectorizer.get_feature_names()
 
-
-
-    top_words = print_top_words(lda, tf_feature_names, n_top_words) # prints out top 40 words from each 'topic' cluster
+    # prints out top 40 words from each 'topic' cluster
+    top_words = print_top_words(lda, tf_feature_names, n_top_words)
 
     return top_words
 
@@ -122,9 +131,9 @@ def get_topic_models(df, n_top_words):
     df['topic'] = topic_list
 
 #    tweets = df['text']
-    ax = sns.countplot(x='topic', data = df)
-    plt.pyplot.show() # show what proportions the topics are represented at
-    
+    ax = sns.countplot(x='topic', data=df)
+    plt.pyplot.show()  # show what proportions the topics are represented at
+
     """**4. Word Clouds for More Visual Info?** """
 
     from gensim.models import CoherenceModel
@@ -140,23 +149,23 @@ def get_topic_models(df, n_top_words):
 #    coherence_lda = coherence_model_lda.get_coherence()
 #    print('\nCoherence Score: ', coherence_lda)
 
-
-    for index in range(0,5):
+    for index in range(0, 5):
         topic = lda.components_[index]
-        
-        topic_words = [tf_feature_names[i] for i in topic.argsort()[:-n_top_words - 1 :-1]]
-    
+
+        topic_words = [tf_feature_names[i]
+                       for i in topic.argsort()[:-n_top_words - 1:-1]]
+
         # Generating the wordcloud with the values under the category dataframe
         cloud = WordCloud(
-                                stopwords=STOPWORDS,
-                                background_color='black',
-                                width=5000,
-                                height=3600
-                                ).generate(" ".join(topic_words))
+            stopwords=STOPWORDS,
+            background_color='black',
+            width=5000,
+            height=3600
+        ).generate(" ".join(topic_words))
         plt.pyplot.imshow(cloud)
         plt.pyplot.axis('off')
         plt.pyplot.show()
-    
+
     """**Next Steps:**
 
 
@@ -172,8 +181,110 @@ def get_topic_models(df, n_top_words):
     * Priya will finish the modeling code in github
     """
 
+
+def evaluate():
+    # testing done here
+    handles_to_evaluate = ['elonmusk', 'barackobama', 'realdonaldtrump', 'justinbieber', 'neiltyson', 'wendys',
+                           'gordonramsay', 'katyperry']
+
+    for handle in handles_to_evaluate:
+        # print handle name
+        print(handle)
+
+        # get data
+        tw_handle = TwitterWrapper("")
+        tw_handle.set_test_name(handle)
+        df = tw_handle.get_tweet_text(cache_only=True)
+        res = get_top_docs(df)
+
+        # test result rouge1, rouge2
+        with open(f'./data/{handle}_gold.txt') as f:
+            content = f.readlines()
+
+        scorer = rouge_scorer.RougeScorer(
+            ['rouge1', 'rouge2'], use_stemmer=True)
+
+        prediction = [doc.strip() for doc in res]
+        prediction = ' '.join(prediction)
+
+        target = [x.strip() for x in content]
+        target = ' '.join(target)
+
+        scores = scorer.score(target, prediction)
+
+        # print scores and newline
+        print(scores)
+        print()
+
+    # finish confirmation
+    print('done!')
+
+
+def get_top_docs(df):
+
+    # convert tweets into list
+    text = df
+
+    # remove words with hashtags in front? remove just the hashtag? remove words with @ in front?
+
+    from nltk.stem import WordNetLemmatizer
+    lemm = WordNetLemmatizer()
+
+    # borrowed from another project, so if this doesn't work I can build out a simpler step by step process
+    class LemmaCountVectorizer(CountVectorizer):
+        def build_analyzer(self):
+            analyzer = super(LemmaCountVectorizer, self).build_analyzer()
+            return lambda doc: (lemm.lemmatize(w) for w in analyzer(doc))
+
+    tf_vectorizer = LemmaCountVectorizer(max_df=0.95,
+                                         min_df=2,
+                                         stop_words='english',
+                                         decode_error='ignore')
+    tf = tf_vectorizer.fit_transform(text)
+
+    """**2. LDA**"""
+
+    lda = LatentDirichletAllocation(n_components=5, max_iter=5,
+                                    learning_method='online',
+                                    learning_offset=50.,
+                                    random_state=0)
+
+    lda.fit(tf)
+
+    lda_W = lda.transform(tf)
+    lda_H = lda.components_
+    tf_feature_names = tf_vectorizer.get_feature_names()
+    documents = text
+    no_top_words = 10
+    no_top_documents = 10
+
+    summary = display_docs(lda_H, lda_W, tf_feature_names,
+                           documents, no_top_words, no_top_documents)
+
+    return summary
+
+
+def display_docs(H, W, feature_names, documents, no_top_words, no_top_documents):
+    summary = []
+    for topic_idx, topic in enumerate(H):
+        # print("Topic %d:" % (topic_idx))
+        # print(" ".join([feature_names[i]
+        #                 for i in topic.argsort()[:-no_top_words - 1:-1]]))
+        top_doc_indices = np.argsort(W[:, topic_idx])[::-1][0:no_top_documents]
+        for doc_index in top_doc_indices:
+            tweet = documents[doc_index]
+            # print(tweet)
+            summary.append(tweet)
+
+        # print()
+
+    return summary
+
+
 if __name__ == '__main__':
-    tw_handle = TwitterWrapper("")
+    evaluate()
+
+    tw_handle = TwitterWrapper("") 
     tw_handle.set_screen_name("BarackObama")
 #    df = tw_handle.get_tweet_id_text(cache_only=False)
     df = tw_handle.get_tweet_text(cache_only=True)

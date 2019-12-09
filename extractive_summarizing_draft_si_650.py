@@ -1,7 +1,9 @@
+from rouge_score import rouge_scorer
 import nltk
 import numpy
 import numpy
 import datetime
+import random
 import pandas as pd
 from nltk.probability import FreqDist
 from math import sqrt
@@ -68,6 +70,19 @@ class AbstractSummarizer(object):
             for item in document.word_frequencies:
                 fv[terms.index(item.word)] = corpus.tf_idf(item.word, text)
             self.documents[id].fv = fv
+
+
+class BaseSummarizer(AbstractSummarizer):
+    '''
+    This class implements the base algorithm for automatic text summarization,
+    where the summarizer selects random "sentences" for a summary.
+    Please note that a single tweet is considered as a "sentence" of the LexRank algorithm.
+    '''
+
+    def summarize(self):
+        doc_list = [document for document in self.documents.values()]
+        random.shuffle(doc_list)
+        return doc_list
 
 
 class LexRankSummarizer(AbstractSummarizer):
@@ -192,13 +207,66 @@ def convert_real_data(df):
         content.construct_word_freq_list(freq_list)
 
         # content.construct_word_freq_list([('basketbal', 1), ('document', 1), (
-            # 'footbal', 1), ('gener', 1), ('golf', 1), ('sport', 1), ('talk', 1), ('tenni', 1)])
+        # 'footbal', 1), ('gener', 1), ('golf', 1), ('sport', 1), ('talk', 1), ('tenni', 1)])
 
         doc = TestDocument(uid, "test_name", "test_name",
                            datetime.datetime.utcnow, content, "no_url", 0)
         docs.append(doc)
 
     return docs
+
+
+def evaluate(base=False):
+    # testing done here
+    handles_to_evaluate = ['elonmusk', 'barackobama', 'realdonaldtrump', 'justinbieber', 'neiltyson', 'wendys',
+                           'gordonramsay', 'katyperry']
+
+    for handle in handles_to_evaluate:
+        # print handle name
+        print(handle)
+
+        # get data
+        tw_handle = TwitterWrapper("")
+        tw_handle.set_test_name(handle)
+        df = tw_handle.get_tweet_id_text(cache_only=True)
+        test_documents = convert_real_data(df)
+
+        # run algorithm
+        doc_dict = {}
+        id = 0
+        for doc in test_documents:
+            doc_dict[id] = doc.content
+            id += 1
+
+        lrs = LexRankSummarizer(doc_dict)
+        res = lrs.summarize(threshold=0.1, tolerance=0.0001)
+
+        if base is True:
+            lrs = BaseSummarizer(doc_dict)
+            res = lrs.summarize()
+
+        # test result rouge1, rouge2
+        with open(f'./data/{handle}_gold.txt') as f:
+            content = f.readlines()
+
+        scorer = rouge_scorer.RougeScorer(
+            ['rouge1', 'rouge2'], use_stemmer=True)
+
+        prediction = [doc.raw.strip() for doc in res[:50]]
+        prediction = ' '.join(prediction)
+
+        target = [x.strip() for x in content]
+        target = ' '.join(target)
+
+        scores = scorer.score(target, prediction)
+
+        # print scores and newline
+        print(scores)
+        print()
+
+    # finish confirmation
+    print('done!')
+
 
 def get_topic_models_graph(df, n_top_words):
     test_documents = convert_real_data(df)
@@ -208,7 +276,7 @@ def get_topic_models_graph(df, n_top_words):
     id = 0
     for doc in test_documents:
         doc_dict[id] = doc.content
-        id +=1
+        id += 1
 
     lrs = LexRankSummarizer(doc_dict)
 
@@ -220,11 +288,27 @@ def get_topic_models_graph(df, n_top_words):
 
         for (columnName, columnData) in item.iteritems():
             if(columnName == 'id'):
-                return_value['values'].append({'id': str(columnData.values[0]), 'text':doc.raw})
+                return_value['values'].append(
+                    {'id': str(columnData.values[0]), 'text': doc.raw})
     return return_value
 
+
 if __name__ == '__main__':
-    tw_handle = TwitterWrapper("")
-    tw_handle.set_screen_name("BarackObama")
-    df = tw_handle.get_tweet_id_text(cache_only=True)
-    get_topic_models_graph(df.head(50), 10)
+    evaluate()
+    # evaluate(base=True)
+
+    # tw_handle = TwitterWrapper("")
+    # tw_handle.set_screen_name("BarackObama")
+    # df = tw_handle.get_tweet_id_text(cache_only=True)
+    # get_topic_models_graph(df.head(50), 10)
+
+# return_value = {"values": []}
+    # res = lrs.summarize(threshold=0.1, tolerance=0.0001)
+    # for doc in res[:n_top_words]:
+    #     print(doc.dist, doc.raw)
+    #     item = df[df['text'] == doc.raw]
+
+    #     for (columnName, columnData) in item.iteritems():
+    #         if(columnName == 'id'):
+    #             return_value['values'].append({'id': str(columnData.values[0]), 'text':doc.raw})
+    # return return_value
