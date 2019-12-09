@@ -6,11 +6,14 @@
             {{body}}
         </p>
     </div>
-     <div AgWordCloud #cloudchart1=ag-word-cloud  [wordData]="wordData1" [options]="options"></div>
-     <div AgWordCloud #cloudchart2=ag-word-cloud  [wordData]="wordData2" [options]="options"></div>
-     <div AgWordCloud #cloudchart3=ag-word-cloud  [wordData]="wordData3" [options]="options"></div>
-     <div AgWordCloud #cloudchart4=ag-word-cloud  [wordData]="wordData4" [options]="options"></div>
-     <div AgWordCloud #cloudchart5=ag-word-cloud  [wordData]="wordData5" [options]="options"></div>
-
-    <ngx-tweet tweetId="921670221710032896"></ngx-tweet>
+    <div >
+     <div class="wordcloud" AgWordCloud #cloudchart1=ag-word-cloud  [wordData]="wordData1" [options]="options"></div>
+     <div class="wordcloud" AgWordCloud #cloudchart2=ag-word-cloud  [wordData]="wordData2" [options]="options"></div>
+     <div class="wordcloud" AgWordCloud #cloudchart3=ag-word-cloud  [wordData]="wordData3" [options]="options"></div>
+     <div class="wordcloud" AgWordCloud #cloudchart4=ag-word-cloud  [wordData]="wordData4" [options]="options"></div>
+     <div class="wordcloud" AgWordCloud #cloudchart5=ag-word-cloud  [wordData]="wordData5" [options]="options"></div>
+    </div>
+    <ngx-tweet #viewtweet1 tweetId="921670221710032896"></ngx-tweet>
+    <div #myDiv><ngx-tweet tweetId={{body}}></ngx-tweet></div>
+         
 </div>
