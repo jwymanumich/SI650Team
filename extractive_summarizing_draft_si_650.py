@@ -268,6 +268,31 @@ def evaluate(base=False):
     print('done!')
 
 
+def get_topic_models_graph(df, n_top_words):
+    test_documents = convert_real_data(df)
+
+    # test_documents = get_test_data()
+    doc_dict = {}
+    id = 0
+    for doc in test_documents:
+        doc_dict[id] = doc.content
+        id += 1
+
+    lrs = LexRankSummarizer(doc_dict)
+
+    return_value = {"values": []}
+    res = lrs.summarize(threshold=0.1, tolerance=0.0001)
+    for doc in res[:n_top_words]:
+        print(doc.dist, doc.raw)
+        item = df[df['text'] == doc.raw]
+
+        for (columnName, columnData) in item.iteritems():
+            if(columnName == 'id'):
+                return_value['values'].append(
+                    {'id': str(columnData.values[0]), 'text': doc.raw})
+    return return_value
+
+
 if __name__ == '__main__':
     evaluate()
     # evaluate(base=True)
