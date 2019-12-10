@@ -58,7 +58,7 @@ def twitter_name_top_tweets(twitter_name, tweet_count):
 
     df = tw_handle.get_tweet_id_text(cache_only=cache_only)
 
-    results = get_topic_models_graph(df.head(100), int(tweet_count))
+    results = get_topic_models_graph(df.head(200), int(tweet_count))
     tweets = results['values']
 
     return jsonify(tweets)
