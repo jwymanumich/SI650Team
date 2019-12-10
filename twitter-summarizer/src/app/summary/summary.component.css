@@ -3,13 +3,6 @@
     flex-direction: column;  
     align-items: center;  
     height: 100%;
-    background-color: grey;
-}
-
-.wordcloud{
-    border: 5px;
-    border-color:white;
-    border-style:solid;
 }
 
 .summary {
