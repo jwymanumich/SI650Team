@@ -14,6 +14,7 @@ import { NgxTweetModule } from "ngx-tweet";
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SearchComponent } from './search/search.component';
 import { SummaryComponent } from './summary/summary.component';
+import { TwitterTopicService } from './twitter_topic/twitter_topic.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { SummaryComponent } from './summary/summary.component';
     FormsModule,
     NgxTweetModule
   ],
-  providers: [],
+  providers: [TwitterTopicService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
