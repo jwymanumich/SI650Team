@@ -14,6 +14,9 @@ export class SearchComponent implements OnInit {
 
   handle: string;
 
+  handles: string[] = ['@elonmusk', '@barackobama', '@realdonaldtrump', '@justinbieber', '@neiltyson', '@wendys',
+    '@gordonramsay', '@katyperry'];
+
   constructor(private router: Router) { }
 
   ngOnInit() {
@@ -35,7 +38,8 @@ export class SearchComponent implements OnInit {
   }
 
   searchRandom() {
-    console.log(`/summary/random`);
-    this.router.navigateByUrl(`/summary/random`);
+    const idx = Math.floor(Math.random() * this.handles.length) + 0 
+    this.handle = this.handles[idx];
+    this.search();
   }
 }
