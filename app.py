@@ -10,9 +10,11 @@ from extractive_summarizing_draft_si_650 import get_topic_models_graph
 
 from flask import Flask
 from flask import request
-from flask_cors import CORS, cross_origin    
+from flask_cors import CORS, cross_origin  
+from flask import jsonify  
 
 app = Flask(__name__)
+CORS(app)
 
 INVERTED_INDEX = None
 MY_COLLECTION = None
@@ -55,8 +57,11 @@ def twitter_name_top_tweets(twitter_name, tweet_count):
             cache_only = False
 
     df = tw_handle.get_tweet_id_text(cache_only=cache_only)
-    return get_topic_models_graph(df.head(50), int(tweet_count))
-#    return get_topic_models(df, n_top_words = int(topic_count))
+
+    results = get_topic_models_graph(df.head(100), int(tweet_count))
+    tweets = results['values']
+
+    return jsonify(tweets)
 
 
 @app.route("/inverted_index")

@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { min-height: 100vh; height: auto; margin: 0; }
+html, body { min-height: 100vh; height: auto; margin: 0; background-color: #303030; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 h1 { font-size: 64px; letter-spacing: 4px; }

@@ -8,3 +8,17 @@
 .summary {
     width: 50%;
 }
+
+.tweets {
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    align-items: center;
+    flex-flow: wrap;
+}
+
+.tweet {
+    max-width: 400px;
+    transform: scale(0.6);
+}
+  

@@ -75,7 +75,7 @@ class TwitterWrapper():
         oldest = alltweets[-1]["id"] - 1
         
         #keep grabbing tweets until there are no tweets left to grab
-        while len(new_tweets) > 0:
+        while len(new_tweets) > 0 and len(alltweets) < 1000:
             print( "getting tweets before %s" % (oldest))
             
 #            time.sleep(2)

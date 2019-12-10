@@ -3,12 +3,13 @@
 
     <div class="summary">
         <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-            aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-            occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            INSERT WORD CLOUD HERE
         </p>
     </div>
     
-    <ngx-tweet tweetId="921670221710032896"></ngx-tweet>
+    <div class="tweets">
+        <div class="tweet" *ngFor="let tweet of tweets; let i = index">
+            <ngx-tweet tweetId={{tweet}}></ngx-tweet>
+        </div>
+    </div>
 </div>

@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { NgxTweetModule } from "ngx-tweet";
+import { HttpClientModule } from '@angular/common/http';
+
 
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SearchComponent } from './search/search.component';
@@ -32,7 +34,8 @@ import { TwitterTopicService } from './twitter_topic/twitter_topic.service';
     MatInputModule,
     MatButtonModule,
     FormsModule,
-    NgxTweetModule
+    NgxTweetModule,
+    HttpClientModule
   ],
   providers: [TwitterTopicService],
   bootstrap: [AppComponent]
