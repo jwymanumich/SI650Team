@@ -3,13 +3,42 @@
 
     <div class="summary">
         <p>
-            INSERT WORD CLOUD HERE
+            <!-- INSERT WORD CLOUD HERE -->
         </p>
     </div>
-    
-    <div class="tweets">
-        <div class="tweet" *ngFor="let tweet of tweets; let i = index">
-            <ngx-tweet tweetId={{tweet}}></ngx-tweet>
-        </div>
+
+    <div class="top-tweets">
+        <mat-tab-group mat-stretch-tabs (selectedTabChange)="tabClick($event)">
+            <mat-tab label="LexRank">
+                <ngx-spinner size="medium" type="ball-atom" [fullScreen]="true">
+                    <p style="color: white"> Summarizing, please wait. </p>
+                </ngx-spinner>
+                <div class="tweets">
+                    <div class="tweet" *ngFor="let tweet of lexTweets; let i = index">
+                        <ngx-tweet tweetId={{tweet}}></ngx-tweet>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="LatentDirichletAllocation">
+                <ngx-spinner size="medium" type="ball-atom" [fullScreen]="true">
+                    <p style="color: white"> Summarizing, please wait. </p>
+                </ngx-spinner>
+                <div class="tweets">
+                    <div class="tweet" *ngFor="let tweet of ldaTweets; let i = index">
+                        <ngx-tweet tweetId={{tweet}}></ngx-tweet>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Random">
+                <ngx-spinner size="medium" type="ball-atom" [fullScreen]="true">
+                    <p style="color: white"> Summarizing, please wait. </p>
+                </ngx-spinner>
+                <div class="tweets">
+                    <div class="tweet" *ngFor="let tweet of ranTweets; let i = index">
+                        <ngx-tweet tweetId={{tweet}}></ngx-tweet>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
     </div>
 </div>

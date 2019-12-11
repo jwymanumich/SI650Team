@@ -187,7 +187,7 @@ def evaluate():
     handles_to_evaluate = ['elonmusk', 'barackobama', 'realdonaldtrump', 'justinbieber', 'neiltyson', 'wendys',
                            'gordonramsay', 'katyperry']
 
-    for handle in handles_to_evaluate:
+    for handle in handles_to_evaluate[:1]:
         # print handle name
         print(handle)
 
@@ -220,7 +220,7 @@ def evaluate():
     print('done!')
 
 
-def get_top_docs(df):
+def get_top_docs(df, top_docs=10):
 
     # convert tweets into list
     text = df
@@ -240,6 +240,7 @@ def get_top_docs(df):
                                          min_df=2,
                                          stop_words='english',
                                          decode_error='ignore')
+
     tf = tf_vectorizer.fit_transform(text)
 
     """**2. LDA**"""
@@ -256,7 +257,7 @@ def get_top_docs(df):
     tf_feature_names = tf_vectorizer.get_feature_names()
     documents = text
     no_top_words = 10
-    no_top_documents = 10
+    no_top_documents = top_docs
 
     summary = display_docs(lda_H, lda_W, tf_feature_names,
                            documents, no_top_words, no_top_documents)
@@ -281,13 +282,25 @@ def display_docs(H, W, feature_names, documents, no_top_words, no_top_documents)
     return summary
 
 
+def get_topic_models_lda(df_text, df, top_docs=10):
+    return_value = {"values": []}
+    res = get_top_docs(df_text, 2)
+    for doc in res:
+        item = df[df['text'] == doc]
+        for (columnName, columnData) in item.iteritems():
+            if(columnName == 'id'):
+                return_value['values'].append(
+                    {'id': str(columnData.values[0]), 'text': doc})
+    return return_value
+
+
 if __name__ == '__main__':
     evaluate()
 
-    tw_handle = TwitterWrapper("") 
-    tw_handle.set_screen_name("BarackObama")
-#    df = tw_handle.get_tweet_id_text(cache_only=False)
-    df = tw_handle.get_tweet_text(cache_only=True)
+#     tw_handle = TwitterWrapper("")
+#     tw_handle.set_screen_name("BarackObama")
+# #    df = tw_handle.get_tweet_id_text(cache_only=False)
+#     df = tw_handle.get_tweet_text(cache_only=True)
 
-    t = get_topic_models(df.head(500), 10)
-    print (t)
+#     t = get_topic_models(df.head(500), 10)
+#     print(t)

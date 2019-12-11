@@ -11,7 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { NgxTweetModule } from "ngx-tweet";
 import { HttpClientModule } from '@angular/common/http';
-
+import { MatTabsModule } from '@angular/material/tabs';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SearchComponent } from './search/search.component';
@@ -35,7 +36,9 @@ import { TwitterTopicService } from './twitter_topic/twitter_topic.service';
     MatButtonModule,
     FormsModule,
     NgxTweetModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTabsModule,
+    NgxSpinnerModule
   ],
   providers: [TwitterTopicService],
   bootstrap: [AppComponent]

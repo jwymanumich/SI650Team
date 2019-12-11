@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~8.2.13",
     "@angular/router": "~8.2.13",
     "hammerjs": "^2.0.8",
+    "ngx-spinner": "^8.0.3",
     "ngx-tweet": "^2.0.3",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",

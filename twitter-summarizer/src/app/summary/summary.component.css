@@ -9,6 +9,10 @@
     width: 50%;
 }
 
+.top-tweets {
+    width: 100%;
+}
+
 .tweets {
     display: flex;
     flex-direction: row;

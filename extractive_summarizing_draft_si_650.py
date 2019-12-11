@@ -293,6 +293,17 @@ def get_topic_models_graph(df, n_top_words):
     return return_value
 
 
+def get_topic_models_random(df, n_top_words):
+    return_value = {"values": []}
+    df = df.sample(n_top_words)
+
+    for index, row in df.iterrows():
+        return_value['values'].append(
+                    {'id': str(row['id']), 'text': row['text']})
+
+    return return_value
+
+
 if __name__ == '__main__':
     evaluate()
     # evaluate(base=True)

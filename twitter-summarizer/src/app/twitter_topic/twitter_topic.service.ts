@@ -18,17 +18,33 @@ export class TwitterTopicService {
         return str;
     }
 
+    twittertoptweetsldaurl(name, count) {
+        var str = `http://127.0.0.1:5000/twittername/${name}/top_tweets_lda/${count}?force_call=true`;
+        return str;
+    }
+
+    twittertoptweetsrandomurl(name, count) {
+        var str = `http://127.0.0.1:5000/twittername/${name}/top_tweets_random/${count}?force_call=true`;
+        return str;
+    }
+
     getTwitterTopics(handle): Observable<Tweet[]> {
-        console.log("getTwitterTopics")
         var url = this.twittertopicurl(handle, '10')
-        console.log(url)
         return this.http.get<Tweet[]>(url);
     }
 
     getTwitterTopTweets(handle): Observable<Tweet[]> {
-        console.log("getTwitterTopTweets")
         var url = this.twittertoptweetsurl(handle, '10')
-        console.log(url)
+        return this.http.get<Tweet[]>(url);
+    }
+
+    getTwitterTopTweetsLda(handle): Observable<Tweet[]> {
+        var url = this.twittertoptweetsldaurl(handle, '10')
+        return this.http.get<Tweet[]>(url);
+    }
+
+    getTwitterTopTweetsRandom(handle): Observable<Tweet[]> {
+        var url = this.twittertoptweetsrandomurl(handle, '10')
         return this.http.get<Tweet[]>(url);
     }
 }
