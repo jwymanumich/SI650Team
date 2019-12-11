@@ -28,9 +28,9 @@ export class TwitterTopicService {
         return str;
     }
 
-    getTwitterTopics(handle): Observable<Tweet[]> {
+    getTwitterTopics(handle): Observable<any[]> {
         var url = this.twittertopicurl(handle, '10')
-        return this.http.get<Tweet[]>(url);
+        return this.http.get<any[]>(url);
     }
 
     getTwitterTopTweets(handle): Observable<Tweet[]> {

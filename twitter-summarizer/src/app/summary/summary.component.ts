@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
+import { CloudData, CloudOptions } from 'angular-tag-cloud-module';
 import { TwitterTopicService } from '../twitter_topic/twitter_topic.service';
 
 @Component({
@@ -16,6 +17,21 @@ export class SummaryComponent implements OnInit {
   public ldaTweets: string[];
   public ranTweets: string[];
 
+  options: CloudOptions = {
+    width: 400,
+    height: 400,
+    overflow: true,
+    randomizeAngle: true
+  };
+
+  colors: string[] = ['#fabebe', '#ffd8b1', '#fffac8', '#aaffc3', '#e6beff',
+    '#668fff', '#91fbff', '#a1a1a1', '#ffd8b1', '#fabebe'];
+  data0: CloudData[] = [];
+  data1: CloudData[] = [];
+  data2: CloudData[] = [];
+  data3: CloudData[] = [];
+  data4: CloudData[] = [];
+
   constructor(private route: ActivatedRoute,
     private twitterService: TwitterTopicService,
     private spinner: NgxSpinnerService) { }
@@ -23,13 +39,32 @@ export class SummaryComponent implements OnInit {
   ngOnInit() {
     this.handle = this.route.snapshot.paramMap.get('id');
     this.getLexSummary();
+    this.getWordCloud();
+  }
+
+  getWordCloud() {
+    this.twitterService.getTwitterTopics(this.handle.replace('@', '')).subscribe(result => {
+      // Colors
+      result.forEach(cloud => {
+        cloud.words.forEach((word, i) => {
+          word.color = this.colors[i];
+        });
+      });
+
+      // Word Clouds
+      this.data0 = result[0].words;
+      this.data1 = result[1].words;
+      this.data2 = result[2].words;
+      this.data3 = result[3].words;
+      this.data4 = result[4].words;
+    });
   }
 
   tabClick(tab) {
     const idx = tab.index;
-    if(idx == 0) { // LexRank
+    if (idx == 0) { // LexRank
       this.getLexSummary();
-    } else if(idx == 1) { // LatentDirichletAllocation
+    } else if (idx == 1) { // LatentDirichletAllocation
       this.getLdaSummary();
     } else { // Random
       this.getRanSummary();
@@ -37,7 +72,7 @@ export class SummaryComponent implements OnInit {
   }
 
   getLexSummary() {
-    if(this.lexTweets) return;
+    if (this.lexTweets) return;
     this.spinner.show();
     this.twitterService.getTwitterTopTweets(this.handle.replace('@', '')).subscribe(result => {
       this.lexTweets = [];
@@ -49,7 +84,7 @@ export class SummaryComponent implements OnInit {
   }
 
   getLdaSummary() {
-    if(this.ldaTweets) return;
+    if (this.ldaTweets) return;
     this.spinner.show();
     this.twitterService.getTwitterTopTweetsLda(this.handle.replace('@', '')).subscribe(result => {
       this.ldaTweets = [];
@@ -61,7 +96,7 @@ export class SummaryComponent implements OnInit {
   }
 
   getRanSummary() {
-    if(this.ranTweets) return;
+    if (this.ranTweets) return;
     this.spinner.show();
     this.twitterService.getTwitterTopTweetsRandom(this.handle.replace('@', '')).subscribe(result => {
       this.ranTweets = [];

@@ -13,6 +13,8 @@ import { NgxTweetModule } from "ngx-tweet";
 import { HttpClientModule } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { TagCloudModule } from 'angular-tag-cloud-module';
+
 
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SearchComponent } from './search/search.component';
@@ -38,7 +40,8 @@ import { TwitterTopicService } from './twitter_topic/twitter_topic.service';
     NgxTweetModule,
     HttpClientModule,
     MatTabsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    TagCloudModule
   ],
   providers: [TwitterTopicService],
   bootstrap: [AppComponent]
