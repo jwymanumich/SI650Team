@@ -55,11 +55,22 @@ def print_top_words(model, feature_names, n_top_words):
 
         my_return[topic_idx] = []
         for item in range(n_top_words):
-            my_return[topic_idx].append({"word": topic_words[item],
+            my_return[topic_idx].append({"text": topic_words[item],
                                          "weight": weights[item]
                                          })
     print()
-    return my_return
+
+    return_value = []
+    for idx in my_return:
+        words = my_return[idx]
+
+        words.sort(key=lambda x: x["weight"])
+        for idx, word in enumerate(words):
+            word["weight"] = idx + 1
+
+        return_value.append({"words": words})
+
+    return return_value
 
 
 def lemmatization(texts, allowed_postags=['NOUN', 'ADJ', 'VERB', 'ADV']):

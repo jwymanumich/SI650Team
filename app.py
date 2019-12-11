@@ -45,7 +45,11 @@ def twitter_name_topics(twitter_name, topic_count):
             cache_only = False
 
     df = tw_handle.get_tweet_text(cache_only=False)
-    return get_topic_models(df, n_top_words=int(topic_count))
+
+    results = get_topic_models(df, n_top_words=int(topic_count))
+
+    print(jsonify(results))
+    return jsonify(results)
 
 
 @app.route("/twittername/<twitter_name>/top_tweets/<tweet_count>")
